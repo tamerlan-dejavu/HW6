@@ -38,35 +38,38 @@ public class TournamentEngine {
         DefenseHandler block = new BlockHandler(hero.getBlockRating() / 100.0);
         DefenseHandler armor = new ArmorHandler(hero.getArmorValue());
         DefenseHandler hp    = new HpHandler();
-        
         dodge.setNext(block).setNext(armor).setNext(hp);
 
         ActionQueue actionQueue = new ActionQueue();
 
         while (hero.isAlive() && opponent.isAlive() && round < maxRounds) {
             round++;
-            System.out.println("\n=== Round " + round + " ===");
+            System.out.println("Round " + round + " ───────────────────────────────");
 
             actionQueue.enqueue(new AttackCommand(opponent, hero.getAttackPower()));
             actionQueue.enqueue(new HealCommand(hero, 20));
             actionQueue.enqueue(new DefendCommand(hero, 0.05));
 
-            System.out.println("Hero actions this round:");
+            System.out.println("  │  Hero actions:");
             for (String desc : actionQueue.getCommandDescriptions()) {
-                System.out.println("  - " + desc);
+                System.out.println("  │    - " + desc);
             }
 
             actionQueue.executeAll();
 
             if (opponent.isAlive()) {
-                System.out.println("Opponent attacks for " + opponent.getAttackPower() + " damage...");
+                System.out.println("  │  Opponent attacks for " + opponent.getAttackPower() + " damage:");
                 dodge.handle(opponent.getAttackPower(), hero);
             }
 
-            String logLine = "[Round " + round + "] Opponent HP: " + opponent.getHealth()  + " | Hero HP: " + hero.getHealth();
+            String logLine = "Round " + round
+                    + "  |  " + opponent.getName() + " HP: " + opponent.getHealth()
+                    + "  |  " + hero.getName() + " HP: " + hero.getHealth();
             System.out.println(logLine);
+            System.out.println();
             result.addLine(logLine);
         }
+
         result.setWinner(hero.isAlive() ? hero.getName() : opponent.getName());
         result.setRounds(round);
         return result;
