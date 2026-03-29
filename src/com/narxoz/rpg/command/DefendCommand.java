@@ -14,13 +14,13 @@ public class DefendCommand implements ActionCommand {
     @Override
     public void execute() {
         target.modifyDodgeChance(dodgeBoost);
-        System.out.println("Dodge chance boosted by " + dodgeBoost + ". New dodge chance: " + target.getDodgeChance());
+        System.out.println("Dodge chance boosted by " + dodgeBoost + ". New dodge chance: " + String.format("%.2f", target.getDodgeChance()));
     }
 
     @Override
     public void undo() {
         target.modifyDodgeChance(-dodgeBoost);
-        System.out.println("Dodge boost removed. Dodge chance: " + target.getDodgeChance());
+        System.out.println("Dodge boost removed. Dodge chance: " + String.format("%.2f", target.getDodgeChance()));
     }
 
     @Override
