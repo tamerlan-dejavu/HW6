@@ -13,7 +13,7 @@ public class ArmorHandler extends DefenseHandler {
     public void handle(int incomingDamage, ArenaFighter target) {
         int absorbed = Math.min(armorValue, incomingDamage); 
         int remainder = incomingDamage - absorbed;           
-        System.out.println("Armor absorbed" + absorbed + " damage. Reminder: " + remainder);
+        System.out.println("Armor absorbed" + absorbed + " damage. Remainder: " + remainder);
         passToNext(remainder, target);
     }
 }
